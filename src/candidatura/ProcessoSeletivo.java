@@ -2,11 +2,40 @@ package candidatura;
 
 
 import java.text.DecimalFormat;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ProcessoSeletivo {
     public static void main(String[] args) {
+        String[] candidatos = {"FELIPE","MARCIA","JULIA","PAULO","AUGUSTO"};
         imprimirSelecionados();
+        for (String candidato: candidatos) {
+            entrandoEmContato(candidato);
+        }
+    }
+    static void entrandoEmContato(String candidato) {
+        int tentativasRealizadas = 1;
+        boolean continuarTentando = true;
+        boolean atendeu = false;
+        do {
+            atendeu = atender();
+            continuarTentando = !atendeu;
+            if(continuarTentando) {
+                tentativasRealizadas++;
+            } else {
+                System.out.println("Contato realizado com sucesso!");
+            }
+        } while (continuarTentando==true && tentativasRealizadas < 3);
+        if(atendeu) {
+            System.out.println("Conseguimos contato com " + candidato + " apos " + tentativasRealizadas + " tentativas");
+        } else {
+            System.out.println("Nao conseguimos contato com " + candidato + ", Numero maximo de tentativas alcancado: " + tentativasRealizadas);
+        }
+    }
+    static boolean atender(){
+        return new Random().nextInt(3)==1;
+        // sera gerado um valor randomico acima(entre 1 e 3), e caso o valor for igual a 1 o metodo
+        // ira retornar "true", se retornar "true" o candidato tera atendido
     }
 
     static void imprimirSelecionados() {
